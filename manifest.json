@@ -1,0 +1,30 @@
+{
+    "manifest_version":2,
+    "name": "My first chrome extension",
+    "description": "Quick launch of my chrome extension",
+    "version": "1.0.0",
+    "content_scripts": [
+        {
+            "matches": ["https://*.amazon.com/*"],
+            "js": [ "content.js" ]
+        }
+    ],
+    "background": {
+        "persistent": false,
+        "scripts": ["background.js"]
+      },
+  "browser_action": {
+    "default_title": "Test Extension",
+    "default_popup": "popup.html"
+  },
+    "icons": {
+        "128": "/images/amazon_icon.png"
+    },
+    "permissions": [
+        "tabs",
+        "https://www.google.com/*",
+        "https://www.amazon.com/*",
+        "storage",
+        "activeTab"
+]
+}
