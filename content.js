@@ -1,29 +1,38 @@
-// console.log('from content.js') 
-// console.log('the current url is\t' + window.location.href)
-// console.log('Hello world')
-console.log("4")
+console.log("Executing content.js")
+function getReviews(productDetails){
 
-function processDOM(domContent) {
-    console.log("in processDOM function")
-    console.log('Product title:'+domContent.title)
-    return document.title
+    //console.log(productDetails)
 }
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse)=>{
+    if (msg.text=='get-initial-data'){
+        var domInfo={
+            productTitle: document.getElementById('productTitle').innerText,
+            productPrice: document.getElementById('priceblock_ourprice').innerText,
+            productAllReviewsLink: document.getElementsByClassName('a-link-emphasis a-text-bold')[0].href
+        }
+    } else if (msg.text=='get-review-data') {
+        productDetails= document.getElementsByClassName("a-section celwidget")
+        getReviews(productDetails)
+        var domInfo={
+            overallProductRating: document.getElementsByClassName("a-size-medium a-color-base")[0].innerText,
 
-// Listen for messages
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    // If the received message has the expected format...
-    console.log("3")
-    if (msg.text === 'report_back') {
-        // Call the specified callback, passing
-        // the web-page's DOM content as argument
-        console.log("content.js in msg loop")
-        sendResponse(document.outerHTML);
-        console.log('content js has DOM element',document.title)
-        // processDOM(document)
-        
-    }
-    
+            review1Title:document.getElementsByClassName("a-size-base a-link-normal review-title a-color-base review-title-content a-text-bold")[0].innerText,
+            review1Date: document.querySelectorAll("[data-hook='review-date']")[0].innerText,
+            review1Rating: document.querySelectorAll("[data-hook='review-star-rating']")[0].innerText,
+            review1Text: document.getElementsByClassName("a-size-base review-text review-text-content")[0].innerText,
+
+            review2Title:document.getElementsByClassName("a-size-base a-link-normal review-title a-color-base review-title-content a-text-bold")[1].innerText,
+            review2Date: document.querySelectorAll("[data-hook='review-date']")[1].innerText,
+            //review2Rating: document.querySelectorAll("[data-hook='review-star-rating]")[3],
+            review2Text: document.getElementsByClassName("a-size-base review-text review-text-content")[1].innerText,
+
+            review3Title:document.getElementsByClassName("a-size-base a-link-normal review-title a-color-base review-title-content a-text-bold")[2].innerText,
+            review3Date: document.querySelectorAll("[data-hook='review-date']")[2].innerText,
+            //review3Rating: document.querySelectorAll("[data-hook='review-star-rating]")[4],
+            review3Text: document.getElementsByClassName("a-size-base review-text review-text-content")[2].innerText,
+            
+            } 
+        }
+        console.log("sending domInfo",domInfo)
+        sendResponse(domInfo)
 });
-
-
-
