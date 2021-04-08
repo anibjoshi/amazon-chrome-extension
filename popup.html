@@ -15,8 +15,6 @@
       crossorigin="anonymous"
     />
     <style>
-      /* Modal Structure */
-
       html,
       body {
         font-family: "Open Sans", sans-serif;
@@ -26,20 +24,38 @@
         padding: 0;
         width: 800px;
       }
+      button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 12px;
+      float: right;
+    }
     </style>
   </head>
 
   <body>
-  <h1>I am popup file </h1>
-  <span id="product-title"></span>
-  <span id="product-price"></span>
-  <span id="product-reviews-link"></span>
-  <span id="product-rating"></span>
-  <span id="product-review1-title"></span>
-  <span id="product-review1-date"></span>
-  <span id="product-review1-text"></span>
-  <span id="product-review2-title"></span>
-  <span id="product-review2-date"></span>
-  <span id="product-review2-text"></span>
+  <button id='start-your-magic'> Click to analyze </button>
+  <br><br><br>
+  <h1>Product Details </h1>
+  <span>Product Title:</span><span id="product-title"></span><br><br>
+  <span>Product Price:</span><span id="product-price"></span><br>
+  <span>Product Reviews Link:</span><span id="product-reviews-link"></span><br>
+  <span>Overall Product Ratings:</span><span id="product-rating"></span><br>
+  <span>Review 1 Title:</span> <span id="product-review1-title"></span><br>
+  <span>Review 1 Date:</span><span id="product-review1-date"></span><br>
+  <span>Review 1 Date:</span><span id="product-review1-rating"></span><br>
+  <span>Review 1 Text:</span><span id="product-review1-text"></span><br><br><br>
+  <span>Review 2 Title:</span><span id="product-review2-title"></span><br>
+  <span>Review 2 Date:</span><span id="product-review2-date"></span><br>
+  <span>Review 1 Date:</span><span id="product-review2-rating"></span><br>
+  <span>Review 2 Text:</span><span id="product-review2-text"></span><br><br><br>
+  <span>Next Reviews URL:</span><span id="next-reviews-url"></span><br>
+
   </body>
 </html>
