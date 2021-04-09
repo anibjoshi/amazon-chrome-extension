@@ -21,6 +21,7 @@
         "https://www.google.com/*",
         "https://www.amazon.com/*",
         "storage",
-        "activeTab"
+        "activeTab",
+        "downloads"
 ]
 }
