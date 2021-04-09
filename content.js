@@ -21,21 +21,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             reviewDate = document.querySelectorAll("[data-hook='review-date']")[i].innerText
             reviewRating = document.querySelectorAll("[data-hook='review-star-rating']")[i].innerText
             reviewText = document.getElementsByClassName("a-size-base review-text review-text-content")[i].innerText
-            // new_review = {
-            //     'reviewTitle': reviewTitle,
-            //     'reviewDate': reviewDate,
-            //     'reviewRating': reviewRating,
-            //     'reviewText': reviewText
-            // }
-            new_review={}
-            new_review['reviewTitle'+i]=reviewTitle
-            new_review['reviewDate'+i]=reviewDate
-            new_review['reviewRating'+i]=reviewRating
-            new_review['reviewText'+i]=reviewText
-            reviews = Object.assign( reviews, new_review)
+            new_review_block = {
+                'reviewTitle':reviewTitle,
+                'reviewDate':reviewDate,
+                'reviewRating':reviewRating,
+                'reviewText':reviewText
+            }
+            reviews[i] = new_review_block
         }
         var next_url = document.getElementsByClassName("a-last")[0].getElementsByTagName('a')[0]
-        console.log('next_url',next_url)
         if (typeof next_url !== 'undefined') {
             next_url_dict = {
                 'nextReviewsURL': document.getElementsByClassName("a-last")[0].getElementsByTagName('a')[0].href
@@ -46,9 +40,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
                 'baseURL':'https://www.amazon.com/MUDEELA-Planter-Watering-Drainage-Shortage/dp/B088FTL4F1/ref=cm_cr_arp_d_product_top?ie=UTF8'
             }
         }
-        domInfo = Object.assign( reviews, next_url_dict)
+        domInfo = Object.assign(reviews, next_url_dict)
     }
-    console.log("sending domInfo!", domInfo)
     sendResponse(domInfo)
     return True
 });
