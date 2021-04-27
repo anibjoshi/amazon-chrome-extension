@@ -11,14 +11,14 @@
     ],
   "browser_action": {
     "default_title": "Amazon Review Genie",
-    "default_popup": "index.html"
+    "default_popup": "popup.html"
   },
     "icons": {
         "128": "/images/amazon_icon.png"
     },
     "permissions": [
         "tabs",
-        "https://chrome-extension-backend.herokuapp.com/",
+        "https://chrome-extension-backend.herokuapp.com/predict",
         "storage",
         "activeTab",
         "downloads"
