@@ -6,3 +6,5 @@ popup2.js
 redirect.html
 workspace.code-workspace
 .DS_Store
+__pycache__
+app/__pycache__

@@ -1,3 +1,4 @@
+
 console.log("Executing popup.js")
 
 var getInitialData = info => {
@@ -7,8 +8,8 @@ var getInitialData = info => {
     product = JSON.stringify(info)
     chrome.storage.local.set({ 'product_details': product }, function () {})
     chrome.storage.local.set({ 'product_review_details': product_reviews }, function () {})
-    console.log('current tab updated with 1st reviews page')
-    console.log('reviews page',info.productAllReviewsLink)
+    // console.log('current tab updated with 1st reviews page')
+    // console.log('reviews page',info.productAllReviewsLink)
     chrome.tabs.update({ url: info.productAllReviewsLink })
 }
 
@@ -16,7 +17,7 @@ var getReviewData = info => {
 
     console.log('are reviews fetched undefined here?:', typeof info)
     if (typeof info.baseURL !== "undefined") {
-        console.log('this is the last page, we have reached the baseURL:', info.baseURL)
+        // console.log('this is the last page, we have reached the baseURL:', info.baseURL)
         new_reviews = info
         chrome.storage.local.get(['product_review_details'], function (result) {
             stored_reviews = result["product_review_details"]
@@ -30,31 +31,45 @@ var getReviewData = info => {
             chrome.storage.local.set({ 'product_review_details': stored_reviews }, function () { });
         });
 
-        chrome.storage.local.get(['product_details', 'product_review_details'], function (result) {
-            var url = 'data:application/json;base64,' + btoa(result.product_details);
-            chrome.downloads.download({
-                url: url,
-                filename: 'product_details.json'
-            });
-            var product_review_json = JSON.stringify(result.product_review_details)
-            var url = 'data:application/json;base64,' + btoa(unescape(encodeURIComponent(product_review_json)));
-            chrome.downloads.download({
-                url: url,
-                filename: 'product_reviews_details.json'
-            });
-        });
+        chrome.storage.local.get(['product_details', 'product_review_details'], function(result){
+            var json_to_send = JSON.stringify(result.product_review_details)
+            console.log(json_to_send)
+            const api_url = 'https://chrome-extension-backend.herokuapp.com/predict';
+            console.log('api url assigned')
+            fetch(api_url, {
+                method: 'POST',
+                body: JSON.stringify(json_to_send),
+                headers:{
+                  'Content-Type': 'application/json'
+                } })
+        })
+        // chrome.storage.local.get(['product_details', 'product_review_details'], function (result) {
+        //     var url = 'data:application/json;base64,' + btoa(result.product_details);
+        //     chrome.downloads.download({
+        //         url: url,
+        //         filename: 'product_details.json'
+        //     });
+        //     var product_review_json = JSON.stringify(result.product_review_details)
+        //     var url = 'data:application/json;base64,' + btoa(unescape(encodeURIComponent(product_review_json)));
+        //     chrome.downloads.download({
+        //         url: url,
+        //         filename: 'product_reviews_details.json'
+        //     });
+        // });
         
+        
+
         chrome.storage.local.remove(["product_details", "product_review_details"], function () {
             var error = chrome.runtime.lastError;
             if (error) {
                 console.error(error);
             }
         });
-        console.log('Lets update to the original baseURL')
+        // console.log('Lets update to the original baseURL')
         chrome.tabs.update({ url: info.baseURL }) 
     }
     else if (typeof info.nextReviewsURL){ 
-       console.log('This is not the last reviews page')
+    //    console.log('This is not the last reviews page')
         new_reviews = info
         chrome.storage.local.get(['product_review_details'], function (result) {
             stored_reviews = result["product_review_details"]
@@ -66,7 +81,7 @@ var getReviewData = info => {
             }
             chrome.storage.local.set({ 'product_review_details': stored_reviews }, function () {})
         })
-        console.log('Navigating to the next reviews page')
+        // console.log('Navigating to the next reviews page')
         chrome.tabs.update({ url: info.nextReviewsURL })
     }
 }
@@ -86,18 +101,18 @@ document.addEventListener("DOMContentLoaded", () => {
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (tab.status == 'complete') {
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-            console.log('onUpdated event triggered')
+            // console.log('onUpdated event triggered')
             currentURL=tabs[0].url
-            console.log('currentURL',currentURL) 
+            // console.log('currentURL',currentURL) 
             chrome.storage.local.get(['product_url'], function(result){
                 baseURL= result['product_url']
                 // chrome.tabs.sendMessage(tabs[0].id, { text: 'get-review-data' }, getReviewData);
             if(baseURL!=currentURL){
-                console.log('we have not reached baseURL yet, so onUpdated event triggered')
+                // console.log('we have not reached baseURL yet, so onUpdated event triggered')
                 chrome.tabs.sendMessage(tabs[0].id, { text: 'get-review-data' }, getReviewData);
             }
             else{
-                console.log('not triggered')
+                // console.log('not triggered')
             }
             })
             

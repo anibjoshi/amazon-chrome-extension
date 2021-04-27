@@ -1,7 +1,7 @@
 {
     "manifest_version":2,
-    "name": "My first chrome extension",
-    "description": "Quick launch of my chrome extension",
+    "name": "Amazon Review Genie",
+    "description": "Analyzes Amazon reviews using NLP techniques to reveal important insights about the product",
     "version": "1.0.0",
     "content_scripts": [
         {
@@ -10,16 +10,15 @@
         }
     ],
   "browser_action": {
-    "default_title": "Test Extension",
-    "default_popup": "popup.html"
+    "default_title": "Amazon Review Genie",
+    "default_popup": "index.html"
   },
     "icons": {
         "128": "/images/amazon_icon.png"
     },
     "permissions": [
         "tabs",
-        "https://www.google.com/*",
-        "https://www.amazon.com/*",
+        "https://chrome-extension-backend.herokuapp.com/",
         "storage",
         "activeTab",
         "downloads"
