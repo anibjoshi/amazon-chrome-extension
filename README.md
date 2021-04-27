@@ -1,11 +1,11 @@
 Amazon product reviews Analyzer
 
-What problem are we trying to solve?
-When you shop on Amazon, there are multiple choices for a simple product and the customer might not have any idea which one to choose. Also, the customer does not know the usbility of the product. Through this application, you can analyze the customer reviews and find insights in usability of the product.
+I) What problem are we trying to solve?
+  When you shop on Amazon, there are multiple choices for a simple product and the customer might not have any idea which one to choose. Also, the customer does not know the usbility of the product. Through this application, you can analyze the customer reviews and find insights in usability of the product.
 
-How to use this tool?
-First, clone the repository
-git clone https://github.com/anuradhaboche/amazon-chrome-extension.git
+II) How to use this tool?
+- First, clone the repository
+  git clone https://github.com/anuradhaboche/amazon-chrome-extension.git
 
 1) Chrome Extension
 - Go to chrome browser and type chrome:\\extensions. From top right corner of browser enable developers mode
