@@ -31,11 +31,9 @@ var getReviewData = info => {
                 method: 'post',
                 body: JSON.stringify(stored_reviews)
             }).then(function(response) {
-                console.log('response',response)
+                // console.log('response',response)
                 return response.json();
             }).then(function(data) {
-                // console.log('Output:', data);
-                console.log('positive_summary',data.positive_summary);
                 document.querySelector('#postive-summary').textContent= data.positive_summary,
                 document.querySelector('#negative-summary').textContent= data.negative_summary,
                 document.querySelector('#keywords').textContent= data.keywords
