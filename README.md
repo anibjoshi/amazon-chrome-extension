@@ -24,3 +24,4 @@ After creating the virtual environment, we are ready to use the app.
 
 3) Demo
 - Refresh the chrome extension using refresh symbol on chrome extension icon.
+- 
