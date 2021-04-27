@@ -32,3 +32,4 @@ The app will provide
 - a short summary of all reviews which are rated negatively
 - Keywords extracted from the reviews text, along with how frequently those are present
 
+Note: This is a work in progress. I am still fixing a few bugs in the code. Also, the model takes some time to run, please be patient.
