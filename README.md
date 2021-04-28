@@ -26,6 +26,7 @@ After creating the virtual environment, we are ready to use the app.
 - Refresh the chrome extension using refresh symbol on chrome extension icon.
 - Navigate to the product you are thinking to purchase.
 Example: https://www.amazon.com/Classic-Home-Garden-Patio-Honeysuckle/dp/B06XHX6JV8/ref=cm_cr_arp_d_product_top?ie=UTF8
+Example: https://www.amazon.com/Mkono-Planters-Decorative-Gardening-Drainage/dp/B07M765LKF/ref=cm_cr_arp_d_product_top?ie=UTF8
 
 The app will provide 
 - a short summary of all reviews which are rated positively
