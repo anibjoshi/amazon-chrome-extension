@@ -26,7 +26,7 @@ class Prediction:
         print("Calling Prediction API")
     
     def generate_summary(self, reviews):
-        summary= summarize(reviews, ratio=0.05)
+        summary= summarize(reviews, ratio=0.01)
         return summary
         
     
@@ -35,16 +35,18 @@ class Prediction:
         df= pd.DataFrame.from_dict(reviews, orient='index')
 
         print('Reviews dataframe created')
-        df['reviewText']= df['reviewTitle'] + '. '+ df['reviewText']
+        # df['reviewText']= df['reviewTitle'] + '. '+ df['reviewText']
         df['reviewDate']= df['reviewDate'].apply(lambda date:re.sub('Reviewed in the United States on ',"", date).strip())
         df['reviewRating']= df['reviewRating'].apply(lambda rating: re.sub(' out of 5 stars',"", rating).strip()) 
         
+        df['length']= df['reviewText'].apply(lambda review: len(review))
+        df=df[df['length']>100]
         df['reviewText']=df['reviewText'].str.encode('ascii', 'ignore').str.decode('ascii')
         df['reviewText']= df['reviewText'].apply(lambda review: review.lower())
         df['reviewText']= df['reviewText'].apply(lambda review: re.sub('\n', ' ', review))
         df['reviewText'] = df['reviewText'].apply(lambda review: re.sub(u"(\u2018|\u2019)", "'", review))
 
-        df['reviewTitle']= df['reviewTitle'].apply(lambda title: title.lower())
+        # df['reviewTitle']= df['reviewTitle'].apply(lambda title: title.lower())
 
         df['reviewRating']= df.reviewRating.astype('float')
         df['reviewClass']=df.apply(lambda row: 1 if row.reviewRating>=4.0 else 0, axis=1)
@@ -59,7 +61,7 @@ class Prediction:
 
         reviews=df[df['reviewClass']==0]['reviewText']
         number_of_negative_reviews =len(reviews)
-        print("No. of negative reviews", len(reviews) )
+        # print("No. of negative reviews", len(reviews) )
         negative_reviews=''
         for review in reviews:
             negative_reviews= negative_reviews+" "+review

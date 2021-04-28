@@ -8,3 +8,4 @@ workspace.code-workspace
 .DS_Store
 __pycache__
 app/__pycache__
+venv
