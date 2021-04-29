@@ -27,7 +27,6 @@ After creating the virtual environment, we are ready to use the app.
 - Navigate to the product you are thinking to purchase.
 Example: https://www.amazon.com/Classic-Home-Garden-Patio-Honeysuckle/dp/B06XHX6JV8/ref=cm_cr_arp_d_product_top?ie=UTF8
 Example: https://www.amazon.com/Mkono-Planters-Decorative-Gardening-Drainage/dp/B07M765LKF/ref=cm_cr_arp_d_product_top?ie=UTF8
-Example: https://www.amazon.com/Mkono-Planters-Decorative-Gardening-Drainage/dp/B07M765LKF/?_encoding=UTF8&pd_rd_w=hXV9H&pf_rd_p=6c7a51c8-1ba8-4aad-8414-c2a22fa8b313&pf_rd_r=9EZQ7Z6HC5F6JZPGAM6W&pd_rd_r=00d225f3-d059-441e-b3fa-6220d89d7454&pd_rd_wg=IkIRo&ref_=pd_gw_ci_mcx_mr_hp_d
 
 The app will provide 
 - a short summary of all reviews which are rated positively
