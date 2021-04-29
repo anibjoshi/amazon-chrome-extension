@@ -19,6 +19,7 @@
     "permissions": [
         "tabs",
         "https://chrome-extension-backend.herokuapp.com/predict",
+        "http://127.0.0.1:5000/predict",
         "storage",
         "activeTab",
         "downloads"

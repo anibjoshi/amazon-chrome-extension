@@ -1,53 +1,57 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Pop-up Page</title>
-    <script src="popup.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous"
-    />
-    <style>
-      html,
-      body {
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        margin: 0;
-        min-height: 800px;
-        padding: 0;
-        width: 800px;
-      }
-      button {
-      background-color: #4CAF50; /* Green */
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      border-radius: 12px;
-      float: right;
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.82.0">
+  <title>Amazon Review Genie</title>
+  <script src="popup.js"></script>
+  <link rel="stylesheet" href="popup.css">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
     }
-    </style>
-  </head>
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
 
-  <body>
-  <button id='start-your-magic'> Click to analyze </button>
-  <br><br><br>
-  <h1>Product Details </h1>
-  <span><b><h4>Positive Summary:</b></h4><br></span><span id="postive-summary"></span><br>
-  <br><br>
-  <span><b><h4>Negative Summary:</h4></b><br></span><span id="negative-summary"></span><br>
-  <br><br>
-  <span><h4><b>Keywords:</b></h4><br></span><span id="keywords"></span><br>
+<body class="d-flex h-100 text-center text-white bg-dark">
 
-  </body>
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+      <div>
+        <h1>Amazon Review Genie</h1>
+        <p class="lead">Analyze your Amazon product's reviews</p>
+      </div>
+    </header>
+
+    <main class="px-3">
+      <span><h4>Positive Summary:</h4><br></span><span id="postive-summary"></span><br>
+      <br><br>
+      <span><h4>Negative Summary:</h4><br></span><span id="negative-summary"></span><br>
+      <br><br>
+      <span><h4>Keywords:</h4><br></span><span id="keywords"></span><br>
+      <p class="lead">
+        <button id="start-your-magic" class="btn btn-lg btn-primary">Click to analyze</button>
+      </p>
+    </main>
+  </div>
+</body>
+
 </html>

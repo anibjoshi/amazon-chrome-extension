@@ -26,9 +26,23 @@ class Prediction:
         print("Calling Prediction API")
     
     def generate_summary(self, reviews):
-        summary= summarize(reviews, ratio=0.01)
-        return summary
-        
+        # summary= summarize(reviews, ratio=0.01)
+        gensim_summary= summarize(reviews, word_count=200)
+        final_summary= self.format_summarization(gensim_summary)
+        return final_summary
+    
+    def format_summarization(self,gensim_summary):
+
+        summary=[]
+        sentences=sent_tokenize(gensim_summary)
+        for sentence in sentences:
+            sentence= sentence.capitalize()
+            summary.append(sentence)
+
+        final_summary= ""
+        for sentence in summary:
+            final_summary= final_summary+ ' '+ sentence
+        return final_summary
     
     def readContent(self, review_json):
         reviews = json.loads(review_json)
@@ -50,6 +64,10 @@ class Prediction:
 
         df['reviewRating']= df.reviewRating.astype('float')
         df['reviewClass']=df.apply(lambda row: 1 if row.reviewRating>=4.0 else 0, axis=1)
+        df['length']= df['reviewText'].apply(lambda review: len(review))
+        df=df[df['length']>100]
+        df.reset_index(drop=True)
+        
         print('Text cleaning done')
     
         reviews=df[df['reviewClass']==1]['reviewText']
@@ -83,7 +101,7 @@ class Prediction:
 
     def acceptable_tags_bigrams(self,bigram):
         first_type= ('JJ', 'VBZ', 'RB' )
-        second_type= ('NN', 'JJ', 'JJ','VB')
+        second_type= ('NN', 'JJ','VB')
         tags = nltk.pos_tag(bigram)
         if 'i' in bigram or 'much' in bigram or 'is' in bigram:
             return False
@@ -130,9 +148,18 @@ class Prediction:
         # trigram_keywords= trigram_keywords.to_json()
         print('Trigrams created')
 
-        keywords= bigram_keywords.append(trigram_keywords).reset_index(drop=True)
-        keywords= keywords.to_json()
+        df_keywords= bigram_keywords.append(trigram_keywords).reset_index(drop=True)
+        
+        keywords= []
+        for index in range(len(df_keywords)):
+            keyword_tuple=df_keywords.loc[index]['keywords']
+            clean_tuple= ' '.join(keyword_tuple)
+            keyword_frequency= df_keywords.loc[index]['frequency']
+            display_keyword= clean_tuple+ ' ('+ str(keyword_frequency)+')'
+            keywords.append(display_keyword)
+        
+        # keywords= keywords.to_json()
 
-        return keywords
+        return json.dumps(keywords)
     
 
