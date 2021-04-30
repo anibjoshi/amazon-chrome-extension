@@ -14,5 +14,9 @@ How to use it?
 - Click on 'click to analyze' button and let the extension run models
 - After sometime, it will display the results
 
+Example products
+- https://www.amazon.com/Classic-Home-Garden-Patio-Honeysuckle/dp/B06XHX6JV8/ref=cm_cr_arp_d_product_top?ie=UTF8
+- https://www.amazon.com/Mkono-Planters-Decorative-Gardening-Drainage/dp/B07M765LKF/ref=cm_cr_arp_d_product_top?ie=UTF8
+
 
 Note: This is a work in progress. 
