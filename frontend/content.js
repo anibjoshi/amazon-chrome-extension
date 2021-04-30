@@ -1,4 +1,4 @@
-console.log("Executing content.js")
+// console.log("Executing content.js")
 chrome.storage.local.get(['product_url'], function(result){
     baseURL= result['product_url']
     // console.log('baseURL from chrome.storage', baseURL) 

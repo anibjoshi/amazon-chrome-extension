@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <!-- <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"> -->
   <meta name="generator" content="Hugo 0.82.0">
   <title>Amazon Review Genie</title>
   <script src="popup.js"></script>
@@ -36,17 +36,28 @@
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
       <div>
-        <h1>Amazon Review Genie</h1>
+        <h1>Amazon TL;DR</h1>
         <p class="lead">Analyze your Amazon product's reviews</p>
       </div>
     </header>
 
     <main class="px-3">
+      <div class='positive-negative'> 
+        <img src="happy.png" alt="Positive Rated" width='80' height='80'>
+        <span><h4></h4></h4><br></span><span id="percent-positive"></span><br>
+      </div>
+      <div class='positive-negative'> 
+        <img src="sad.png" alt="Positive Rated" width='80' height='80'>
+        <span><h4></h4></h4><br></span><span id="percent-negative"></span><br>
+      </div>
       <span><h4>Positive Summary:</h4><br></span><span id="postive-summary"></span><br>
       <br><br>
       <span><h4>Negative Summary:</h4><br></span><span id="negative-summary"></span><br>
       <br><br>
-      <span><h4>Keywords:</h4><br></span><span id="keywords"></span><br>
+      <span><h4></h4>Keywords:</h4><br></span><span id="keywords"></span><br>
+      <span><h4></h4></h4><br></span><span id="positive-reviews"></span>
+      <span><h4></h4></h4><br></span><span id="negative-reviews"></span>
+      <span><h4></h4></h4><br></span><span id="total-reviews"></span>
       <p class="lead">
         <button id="start-your-magic" class="btn btn-lg btn-primary">Click to analyze</button>
       </p>
