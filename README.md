@@ -17,7 +17,7 @@ To use this, follow below steps -
 
 <img width="510" alt="image" src="https://user-images.githubusercontent.com/37079376/116767346-9960a580-a9fd-11eb-9258-00c2391ab810.png">
 
-- To enable models, open the repository in Visual Studio editor.
+- To run models locally, open the repository in Visual Studio editor.
 - type cd <download-folder>/amazon-chrome-extension in terminal
 - Execute below commands
   - python3 -m venv venv
