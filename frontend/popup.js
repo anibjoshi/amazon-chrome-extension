@@ -27,8 +27,8 @@ var getReviewData = info => {
                 stored_reviews[stored_reviews_length++] = new_reviews[i++]
             }
 
-            // fetch('https://chrome-extension-backend.herokuapp.com/predict', {
-            fetch('http://127.0.0.1:5000/predict', { 
+            fetch('https://chrome-extension-backend.herokuapp.com/predict', {
+            // fetch('http://127.0.0.1:5000/predict', { 
                 method: 'post',
                 body: JSON.stringify(stored_reviews)
             }).then(function(response) {
