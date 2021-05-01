@@ -35,14 +35,17 @@ var getReviewData = info => {
                 // console.log('response',response)
                 return response.json();
             }).then(function(data) {
-                document.querySelector('#postive-summary').textContent= data.positive_summary,
-                document.querySelector('#negative-summary').textContent= data.negative_summary,
-                document.querySelector('#keywords').textContent= data.keywords,
-                document.querySelector('#positive-reviews').textContent= data.number_of_positive_reviews,
-                document.querySelector('#negative-reviews').textContent= data.number_of_negative_reviews,
-                document.querySelector('#total-reviews').textContent= data.total_number_of_reviews,
-                document.querySelector('#percent-positive').textContent= (data.number_of_positive_reviews/data.total_number_of_reviews) *100,
-                document.querySelector('#percent-negative').textContent= (data.number_of_negative_reviews/data.total_number_of_reviews) *100
+                //document.querySelector('#results').style.visibility = "visible";
+                document.querySelector('#positive-summary').textContent= data.positive_summary
+                document.querySelector('#negative-summary').textContent= data.negative_summary
+                document.querySelector('#keywords').textContent= data.keywords
+                document.querySelector('#positive-reviews').textContent= data.number_of_positive_reviews
+                document.querySelector('#negative-reviews').textContent= data.number_of_negative_reviews
+                document.querySelector('#total-reviews').textContent= data.total_number_of_reviews
+                positive_percentage = (data.number_of_positive_reviews/data.total_number_of_reviews) *100
+                document.querySelector('#percent-positive').textContent= positive_percentage.toFixed(0) + "%"
+                negative_percentage = (data.number_of_negative_reviews/data.total_number_of_reviews) *100
+                document.querySelector('#percent-negative').textContent= negative_percentage.toFixed(0) + "%"
             });
         });
 

@@ -14,7 +14,7 @@ def predict_summary():
 	print('---SUMMARY GENERATION---')
 	prediction=Prediction()
 	review_json = json.dumps(json.loads(request.data))
-	# print(review_json)
+	print(review_json)
 	positive_reviews, negative_reviews, all_reviews,number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews=prediction.readContent(review_json)
 	print('Starting to generate summaries')	
 
@@ -32,7 +32,7 @@ def predict_summary():
 	'number_of_positive_reviews':number_of_positive_reviews,'number_of_negative_reviews': number_of_negative_reviews,
 	'total_number_of_reviews':total_number_of_reviews})
 
-	print('Returned output json')
+	print('Returned output json',output_json)
 	# client = MongoClient('localhost', 27017)
 	# db = client['amazon_reviews_data']
 	# collection_data = db['reviews_json']

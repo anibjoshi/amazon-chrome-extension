@@ -1,14 +1,16 @@
-from app import app
-import pandas as pd
+
 import nltk
+nltk.download('averaged_perceptron_tagger')
+nltk.download('vader_lexicon')
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+import pandas as pd
 import numpy as np
 import json
 from nltk.tokenize import sent_tokenize,word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer, WordNetLemmatizer
 import re
-import operator
-from sklearn.metrics.pairwise import cosine_similarity
 import string
 from gensim.summarization import summarize
 
@@ -39,10 +41,10 @@ class Prediction:
             sentence= sentence.capitalize()
             summary.append(sentence)
 
-        final_summary= ""
-        for sentence in summary:
-            final_summary= final_summary+ ' '+ sentence
-        return final_summary
+        # final_summary= ""
+        # for sentence in summary:
+        #     final_summary= final_summary+ ' '+ sentence
+        return summary
     
     def readContent(self, review_json):
         reviews = json.loads(review_json)
@@ -74,23 +76,26 @@ class Prediction:
     
         reviews=df[df['reviewClass']==1]['reviewText']
         # number_of_positive_reviews =len(reviews) 
-        positive_reviews=''
+        positive_review_set = set()
         for review in reviews:
-            positive_reviews= positive_reviews+" "+review
+            positive_review_set.add(review)
+        positive_reviews = " ".join(positive_review_set)
         print('Positive reviews classified')
 
         reviews=df[df['reviewClass']==0]['reviewText']
         # number_of_negative_reviews =len(reviews)
-        negative_reviews=''
+        negative_review_set = set()
         for review in reviews:
-            negative_reviews= negative_reviews+" "+review
+            negative_review_set.add(review)
+        negative_reviews = " ".join(negative_review_set)
         print('Negative reviews classified')
         
         reviews= df['reviewText']
         # total_number_of_reviews=len(df['reviewText'])
-        all_reviews=''
+        all_reviews_set = set()
         for review in reviews:
-            all_reviews= all_reviews+" "+review
+            all_reviews_set.add(review)
+        all_reviews = " ".join(all_reviews_set)
         print('Positive, Negative reviews returned')
 
         return positive_reviews, negative_reviews, all_reviews, number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews

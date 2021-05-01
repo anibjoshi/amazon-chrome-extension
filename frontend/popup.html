@@ -4,62 +4,73 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <!-- <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"> -->
-  <meta name="generator" content="Hugo 0.82.0">
   <title>Amazon Review Genie</title>
-  <script src="popup.js"></script>
-  <link rel="stylesheet" href="popup.css">
-
   <!-- Bootstrap core CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+  <script src="popup.js"></script>
+  <link rel="stylesheet" href="/css/popup.css">
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">
-
-  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="mb-auto">
+  <div class="cover-container d-flex p-3 mx-auto flex-column">
       <div>
         <h1>Amazon TL;DR</h1>
         <p class="lead">Analyze your Amazon product's reviews</p>
       </div>
-    </header>
 
     <main class="px-3">
-      <div class='positive-negative'> 
-        <img src="happy.png" alt="Positive Rated" width='80' height='80'>
-        <span><h4></h4></h4><br></span><span id="percent-positive"></span><br>
+      <div class = 'results'>
+        <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <div class='sentiment-analysis text-center'> 
+              <img src="/images/happy.png" alt="Positive Rated" width='80' height='80'>
+              <h5 id="percent-positive"></h5>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class='sentiment-analysis text-center'> 
+              <img src="/images/sad.png" alt="Positive Rated" width='80' height='80'>
+              <h5 id="percent-negative"></h5>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="text-center">
+              Positive Summary
+            </h4>
+            <span id="positive-summary"></span>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="text-center">
+              Negative Summary
+            </h4>
+            <span id="negative-summary"></span>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="text-center">
+              Keywords
+            </h4>
+            <span id="keywords"></span>
+            <span id="positive-reviews"></span>
+            <span id="negative-reviews"></span>
+            <span id="total-reviews"></span>
+          </div>
+        </div>
       </div>
-      <div class='positive-negative'> 
-        <img src="sad.png" alt="Positive Rated" width='80' height='80'>
-        <span><h4></h4></h4><br></span><span id="percent-negative"></span><br>
-      </div>
-      <span><h4>Positive Summary:</h4><br></span><span id="postive-summary"></span><br>
-      <br><br>
-      <span><h4>Negative Summary:</h4><br></span><span id="negative-summary"></span><br>
-      <br><br>
-      <span><h4></h4>Keywords:</h4><br></span><span id="keywords"></span><br>
-      <span><h4></h4></h4><br></span><span id="positive-reviews"></span>
-      <span><h4></h4></h4><br></span><span id="negative-reviews"></span>
-      <span><h4></h4></h4><br></span><span id="total-reviews"></span>
+    </div>
+    <br>
       <p class="lead">
-        <button id="start-your-magic" class="btn btn-lg btn-primary">Click to analyze</button>
+        <button id="start-your-magic" class="btn btn-lg btn-primary">Click to Analyze</button>
       </p>
     </main>
   </div>
