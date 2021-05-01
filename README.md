@@ -6,7 +6,13 @@ This is a chrome extension for amazon shoppers. It lets you understand the produ
 To use this, follow below steps -
 - First, clone the repository using git clone https://github.com/anuradhaboche/amazon-chrome-extension.git
 - Go to chrome browser and type chrome://extensions. From top right corner of browser enable Developers mode
+
+<img width="1430" alt="image" src="https://user-images.githubusercontent.com/37079376/116767529-b2b62180-a9fe-11eb-9976-124622258d40.png">
+
 - Click on 'Load unpacked' option and select the frontend folder from the cloned github repo.
+
+<img width="446" alt="image" src="https://user-images.githubusercontent.com/37079376/116767551-d711fe00-a9fe-11eb-8830-b0611e2b7be3.png">
+
 - Enable the chrome extension using toggle option
 
 <img width="510" alt="image" src="https://user-images.githubusercontent.com/37079376/116767346-9960a580-a9fd-11eb-9258-00c2391ab810.png">
