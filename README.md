@@ -17,3 +17,23 @@ To use this, follow below steps -
   - python3 -m venv venv
   - source venv/bin/activate
   - pip3 install -r requirements.txt
+
+After creating the virtual environment, we are ready to use the app.
+
+
+**Demo**
+
+- Refresh the chrome extension using refresh symbol on chrome extension icon.
+
+<img width="503" alt="image" src="https://user-images.githubusercontent.com/37079376/116767440-1ee45580-a9fe-11eb-9538-74f5db9426a5.png">
+
+- Navigate to the product you are thinking to purchase. Few examples to try
+  -   https://www.amazon.com/Classic-Home-Garden-Patio-Honeysuckle/dp/B06XHX6JV8/ref=cm_cr_arp_d_product_top?ie=UTF8
+  -   https://www.amazon.com/Mkono-Planters-Decorative-Gardening-Drainage/dp/B07M765LKF/ref=cm_cr_arp_d_product_top?ie=UTF8
+ 
+ 
+ The app will provide output in below format 
+ 
+ <img width="297" alt="image" src="https://user-images.githubusercontent.com/37079376/116767501-7387d080-a9fe-11eb-9c1a-68b96636f4ba.png">
+
+Note: This is a work in progress. 
