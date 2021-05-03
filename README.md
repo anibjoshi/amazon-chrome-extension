@@ -33,9 +33,10 @@ After creating the virtual environment, we are ready to use the app.
 
 <img width="503" alt="image" src="https://user-images.githubusercontent.com/37079376/116767440-1ee45580-a9fe-11eb-9538-74f5db9426a5.png">
 
-- Navigate to the product you are thinking to purchase. Few examples to try
+- Navigate to the product you are thinking to purchase. Few examples to try - 
   -   https://www.amazon.com/Classic-Home-Garden-Patio-Honeysuckle/dp/B06XHX6JV8/ref=cm_cr_arp_d_product_top?ie=UTF8
   -   https://www.amazon.com/Mkono-Planters-Decorative-Gardening-Drainage/dp/B07M765LKF/ref=cm_cr_arp_d_product_top?ie=UTF8
+  -   https://www.amazon.com/Polaroid-Hi-Print-Bluetooth-Connected-Compatible/dp/B08FRNCCDS/ref=cm_cr_arp_d_product_top?ie=UTF8
  
  
  The app will provide output in below format 
