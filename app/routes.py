@@ -25,7 +25,7 @@ def predict_summary():
         }
     )
 	app.logger.info(response)
-	review_json = json.loads(response["input_json"])
+	review_json = json.dumps(json.loads(response["input_json"]))
 
 	prediction=Prediction()
 	positive_reviews, negative_reviews, all_reviews,number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews=prediction.readContent(review_json)
