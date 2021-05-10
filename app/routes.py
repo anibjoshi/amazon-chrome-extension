@@ -25,27 +25,37 @@ def predict_summary():
         }
     )
 	app.logger.info(response)
+	review_json = json.loads(response["input_json"])
 
-	# prediction=Prediction()
-	# review_json = json.dumps(json.loads(request.data))
-	# app.logger.info(review_json)
-	# positive_reviews, negative_reviews, all_reviews,number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews=prediction.readContent(review_json)
-	# app.logger.info('Starting to generate summaries')	
+	prediction=Prediction()
+	positive_reviews, negative_reviews, all_reviews,number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews=prediction.readContent(review_json)
+	app.logger.info('Starting to generate summaries')	
 
-	# positive_summary=prediction.generate_summary(positive_reviews)
-	# app.logger.info('Generated positive summary')
+	positive_summary=prediction.generate_summary(positive_reviews)
+	app.logger.info('Generated positive summary')
 
-	# negative_summary=prediction.generate_summary(negative_reviews)
-	# app.logger.info('Generated negative summary')
+	negative_summary=prediction.generate_summary(negative_reviews)
+	app.logger.info('Generated negative summary')
 
-	# app.logger.info('---KEYWORD EXTRACTION---')
-	# keywords= prediction.get_keywords(all_reviews)
-	# app.logger.info('Keywords extracted')
+	app.logger.info('---KEYWORD EXTRACTION---')
+	keywords= prediction.get_keywords(all_reviews)
+	app.logger.info('Keywords extracted')
 
-	# output_json= json.dumps({'positive_summary':positive_summary, 'negative_summary': negative_summary, 'keywords': keywords,
-	# 'number_of_positive_reviews':number_of_positive_reviews,'number_of_negative_reviews': number_of_negative_reviews,
-	# 'total_number_of_reviews':total_number_of_reviews})
-
-	# app.logger.info('Returned output json',output_json)
+	output_json= json.dumps({'positive_summary':positive_summary, 'negative_summary': negative_summary, 'keywords': keywords,
+	'number_of_positive_reviews':number_of_positive_reviews,'number_of_negative_reviews': number_of_negative_reviews,
+	'total_number_of_reviews':total_number_of_reviews})
+	
+	response = table.put_item(
+        Key={
+            'reviewId':review_id
+        }
+    )
+	response = table.put_item(
+        Item={
+            'reviewId':review_id,
+            'output_json':output_json
+        }
+    )
+	app.logger.info('Returned output json',output_json)
 
 	return 'Success'
