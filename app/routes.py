@@ -49,6 +49,7 @@ def predict_summary():
 	response = table.put_item(
         Item={
             'reviewId':review_id,
+			'input_json':review_json,
             'output_json':output_json
         }
     )
