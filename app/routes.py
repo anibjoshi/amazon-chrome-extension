@@ -12,22 +12,18 @@ def index():
 def predict_summary():	
 
 	app.logger.info('---SUMMARY GENERATION---')
-	app.logger.info('request.data',request.data)
 	review_id_json = json.loads(request.data)
 	review_id = review_id_json.get("reviewId")
 	app.logger.info('reviewId: ',str(review_id))
 
-	client = boto3.resource("dynamodb",region_name='us-east-1')
-	table = client.Table("review_analysis")
+	s3 = boto3.client('s3')
+	bucket = 'chrome-extension-bucket'
 
-	response = table.get_item(
-        Key={
-            'reviewId':review_id
-        }
-    )
-	app.logger.info(response.get('Item').get('input_json'))
-	review_json = json.dumps(json.loads(response.get('Item').get('input_json')))
+	key = review_id +".json"
+	response = s3.get_object(Bucket=bucket,Key=key)
 
+	review_json = json.dumps(json.loads(response['Body'].read()))
+	app.logger.info('review_json',review_json)
 	prediction=Prediction()
 	positive_reviews, negative_reviews, all_reviews,number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews=prediction.readContent(review_json)
 	app.logger.info('Starting to generate summaries')	
@@ -45,11 +41,21 @@ def predict_summary():
 	output_json= json.dumps({'positive_summary':positive_summary, 'negative_summary': negative_summary, 'keywords': keywords,
 	'number_of_positive_reviews':number_of_positive_reviews,'number_of_negative_reviews': number_of_negative_reviews,
 	'total_number_of_reviews':total_number_of_reviews})
+	
+	client = boto3.resource("dynamodb",region_name='us-east-1')
+	table = client.Table("review_analysis")
+	
+	# response = table.get_item(
+    #     Key={
+    #         'reviewId':review_id
+    #     }
+    # )
+	# app.logger.info(response.get('Item').get('input_json'))
+	# review_json = json.dumps(json.loads(response.get('Item').get('input_json')))
 
 	response = table.put_item(
         Item={
             'reviewId':review_id,
-			'input_json':review_json,
             'output_json':output_json
         }
     )
