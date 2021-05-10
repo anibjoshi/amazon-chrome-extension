@@ -14,7 +14,7 @@ def predict_summary():
 	app.logger.info('---SUMMARY GENERATION---')
 	review_id_json = json.loads(request.data)
 	review_id = review_id_json.get("reviewId")
-	app.logger.info('reviewId: ',str(review_id))
+	app.logger.info('New reviewId: ',str(review_id))
 
 	s3 = boto3.client('s3')
 	bucket = 'chrome-extension-bucket'
