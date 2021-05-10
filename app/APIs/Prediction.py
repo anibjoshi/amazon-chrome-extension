@@ -6,6 +6,7 @@ from nltk.tokenize import sent_tokenize,word_tokenize
 import re
 import string
 from gensim.summarization import summarize
+from app import app
 
 # nltk.download('averaged_perceptron_tagger')
 
@@ -18,7 +19,7 @@ from gensim.summarization import summarize
 class Prediction:
 
     def __init__(self):
-        print("Calling prediction API")
+        app.logger.info("Calling prediction API")
     
     def generate_summary(self, reviews):
         # summary= summarize(reviews, ratio=0.01)
@@ -43,7 +44,7 @@ class Prediction:
         reviews = json.loads(review_json)
         df= pd.DataFrame.from_dict(reviews, orient='index')
 
-        print('Reviews dataframe created')
+        app.logger.info('Reviews dataframe created')
         # df['reviewText']= df['reviewTitle'] + '. '+ df['reviewText']
         df['reviewDate']= df['reviewDate'].apply(lambda date:re.sub('Reviewed in the United States on ',"", date).strip())
         df['reviewRating']= df['reviewRating'].apply(lambda rating: re.sub(' out of 5 stars',"", rating).strip()) 
@@ -65,7 +66,7 @@ class Prediction:
         df=df[df['length']>100]
         df.reset_index(drop=True)
         
-        print('Text cleaning done')
+        app.logger.info('Text cleaning done')
     
         reviews=df[df['reviewClass']==1]['reviewText']
         # number_of_positive_reviews =len(reviews) 
@@ -73,7 +74,7 @@ class Prediction:
         for review in reviews:
             positive_review_set.add(review)
         positive_reviews = " ".join(positive_review_set)
-        print('Positive reviews classified')
+        app.logger.info('Positive reviews classified')
 
         reviews=df[df['reviewClass']==0]['reviewText']
         # number_of_negative_reviews =len(reviews)
@@ -81,7 +82,7 @@ class Prediction:
         for review in reviews:
             negative_review_set.add(review)
         negative_reviews = " ".join(negative_review_set)
-        print('Negative reviews classified')
+        app.logger.info('Negative reviews classified')
         
         reviews= df['reviewText']
         # total_number_of_reviews=len(df['reviewText'])
@@ -89,7 +90,7 @@ class Prediction:
         for review in reviews:
             all_reviews_set.add(review)
         all_reviews = " ".join(all_reviews_set)
-        print('Positive, Negative reviews returned')
+        app.logger.info('Positive, Negative reviews returned')
 
         return positive_reviews, negative_reviews, all_reviews, number_of_positive_reviews, number_of_negative_reviews,total_number_of_reviews
 
@@ -126,26 +127,26 @@ class Prediction:
         cleaned_sentences= [ self.remove_punctuations(sentence) for sentence in sentences]
         review_comments_tokens= [word_tokenize(sentence) for sentence in cleaned_sentences]
         review_comments_tokens= [token for token_list in review_comments_tokens for token in token_list]
-        print('Text prepping for keyword extraction done')
+        app.logger.info('Text prepping for keyword extraction done')
 
         bigram_finder= nltk.collocations.BigramCollocationFinder.from_words(review_comments_tokens)
         df_bigram_frequency = pd.DataFrame(bigram_finder.ngram_fd.items(), columns=['keywords','frequency']).sort_values(by='frequency', ascending=False)
         df_bigram_frequency.reset_index(inplace=True, drop=True)
         df_bigram_frequency['pos_tag']= df_bigram_frequency['keywords'].apply(lambda bigram: self.acceptable_tags_bigrams(bigram))
         bigram_keywords=df_bigram_frequency[df_bigram_frequency['pos_tag']== True][['keywords', 'frequency']][:10]
-        # print('bigram_keywords',bigram_keywords)
+        # app.logger.info('bigram_keywords',bigram_keywords)
         # bigram_keywords= bigram_keywords.to_json()
 
-        print('Bigrams created')
+        app.logger.info('Bigrams created')
 
         trigram_finder= nltk.collocations.TrigramCollocationFinder.from_words(review_comments_tokens)
         df_trigram_frequency = pd.DataFrame(trigram_finder.ngram_fd.items(), columns=['keywords','frequency']).sort_values(by='frequency', ascending=False)
         df_trigram_frequency.reset_index(inplace=True, drop=True)
         df_trigram_frequency['pos_tag']= df_trigram_frequency['keywords'].apply(lambda trigram: self.acceptable_tags_trigrams(trigram))
         trigram_keywords=df_trigram_frequency[df_trigram_frequency['pos_tag']== True][['keywords', 'frequency']][:10]
-        # print('trigram_keywords',trigram_keywords)
+        # app.logger.info('trigram_keywords',trigram_keywords)
         # trigram_keywords= trigram_keywords.to_json()
-        print('Trigrams created')
+        app.logger.info('Trigrams created')
 
         df_keywords= bigram_keywords.append(trigram_keywords).reset_index(drop=True)
         
