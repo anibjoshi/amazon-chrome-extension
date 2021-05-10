@@ -12,6 +12,7 @@ def index():
 def predict_summary():	
 
 	app.logger.info('---SUMMARY GENERATION---')
+	app.logger.info('request.data',request.data)
 	review_id_json = json.loads(request.data)
 	review_id = review_id_json.get("reviewId")
 	app.logger.info('reviewId: ',str(review_id))
