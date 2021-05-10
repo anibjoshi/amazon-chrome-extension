@@ -13,9 +13,9 @@ def predict_summary():
 
 	app.logger.info('---SUMMARY GENERATION---')
 
-	print('reviewId: ',request.data)
+	app.logger.info('reviewId: ',request.data)
 
-	client = boto3.resource("dynamodb")
+	client = boto3.resource("dynamodb",region_name='us-east-1')
 	table = client.Table("review_analysis")
 
 	response = table.get_item(
@@ -23,7 +23,7 @@ def predict_summary():
             'reviewId':request.data
         }
     )
-	print(response)
+	app.logger.info(response)
 
 	# prediction=Prediction()
 	# review_json = json.dumps(json.loads(request.data))
