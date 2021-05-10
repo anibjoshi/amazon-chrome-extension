@@ -44,12 +44,7 @@ def predict_summary():
 	output_json= json.dumps({'positive_summary':positive_summary, 'negative_summary': negative_summary, 'keywords': keywords,
 	'number_of_positive_reviews':number_of_positive_reviews,'number_of_negative_reviews': number_of_negative_reviews,
 	'total_number_of_reviews':total_number_of_reviews})
-	
-	response = table.put_item(
-        Key={
-            'reviewId':review_id
-        }
-    )
+
 	response = table.put_item(
         Item={
             'reviewId':review_id,
