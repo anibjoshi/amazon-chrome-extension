@@ -1,101 +1,93 @@
-// console.log("Executing popup.js")
+var intervalId;
+var reviewId;
+function getSummaryData(review_id) {
+    if (review_id != null) {
+        body_input = JSON.stringify({ "id": review_id })
+        fetch('https://ccht5748dc.execute-api.us-east-1.amazonaws.com/backend/results', {
+            method: 'post',
+            body: JSON.stringify({ "id": review_id })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            output = JSON.parse(data.output);
+            if (output !== null) {
+                document.querySelector('#positive-summary').textContent = output.positive_summary
+                document.querySelector('#negative-summary').textContent = output.negative_summary
+                document.querySelector('#keywords').textContent = output.keywords
+                positive_percentage = (output.number_of_positive_reviews / output.total_number_of_reviews) * 100
+                document.querySelector('#percent-positive').textContent = positive_percentage.toFixed(0) + "%"
+                negative_percentage = (output.number_of_negative_reviews / output.total_number_of_reviews) * 100
+                document.querySelector('#percent-negative').textContent = negative_percentage.toFixed(0) + "%"
+                window.clearInterval(intervalId);
+            }
+        });
+    }
+}
 
 var getInitialData = info => {
-    // console.log('Storing data in chrome storage')
     product = {}
     product_reviews = {}
     product = JSON.stringify(info)
-    chrome.storage.local.set({ 'product_details': product }, function () {})
-    chrome.storage.local.set({ 'product_review_details': product_reviews }, function () {})
-    // console.log('current tab updated with 1st reviews page')
-    // console.log('reviews page',info.productAllReviewsLink)
-    chrome.tabs.update({ url: info.productAllReviewsLink })
+    chrome.storage.local.set({ 'product_details': product }, function () { })
+    chrome.storage.local.set({ 'product_review_details': product_reviews }, function () { })
+    if (typeof info !== 'undefined') {
+        chrome.tabs.update({ url: info.productAllReviewsLink })
+    }
 }
 
 var getReviewData = info => {
-
-    // console.log('are reviews fetched undefined here?:', typeof info)
-    if (typeof info.baseURL !== "undefined") {
-        // console.log('this is the last page, we have reached the baseURL:', info.baseURL)
-        new_reviews = info
-        chrome.storage.local.get(['product_review_details'], function (result) {
-            stored_reviews = result["product_review_details"]
-            var i = 0
-            stored_reviews_length = Object.keys(stored_reviews).length
-            new_reviews_length = Object.keys(new_reviews).length
-            while (i < new_reviews_length) {
-                stored_reviews[stored_reviews_length++] = new_reviews[i++]
-            }
-
-            fetch('https://chrome-extension-backend.herokuapp.com/predict', {
-            // fetch('http://127.0.0.1:5000/predict', { 
-                method: 'post',
-                body: JSON.stringify(stored_reviews)
-            }).then(function(response) {
-                // console.log('response',response)
-                return response.json();
-            }).then(function(data) {
-                //document.querySelector('#results').style.visibility = "visible";
-                document.querySelector('#positive-summary').textContent= data.positive_summary
-                document.querySelector('#negative-summary').textContent= data.negative_summary
-                document.querySelector('#keywords').textContent= data.keywords
-                document.querySelector('#positive-reviews').textContent= data.number_of_positive_reviews
-                document.querySelector('#negative-reviews').textContent= data.number_of_negative_reviews
-                document.querySelector('#total-reviews').textContent= data.total_number_of_reviews
-                positive_percentage = (data.number_of_positive_reviews/data.total_number_of_reviews) *100
-                document.querySelector('#percent-positive').textContent= positive_percentage.toFixed(0) + "%"
-                negative_percentage = (data.number_of_negative_reviews/data.total_number_of_reviews) *100
-                document.querySelector('#percent-negative').textContent= negative_percentage.toFixed(0) + "%"
+    if (typeof info !== "undefined") {
+        if (typeof info.baseURL !== "undefined") {
+            new_reviews = info
+            chrome.storage.local.get(['product_review_details'], function (result) {
+                stored_reviews = result["product_review_details"]
+                var i = 0
+                if (typeof stored_reviews !== 'undefined') {
+                    stored_reviews_length = Object.keys(stored_reviews).length
+                    new_reviews_length = Object.keys(new_reviews).length
+                    while (i < new_reviews_length) {
+                        stored_reviews[stored_reviews_length++] = new_reviews[i++]
+                    }
+                    fetch('https://ccht5748dc.execute-api.us-east-1.amazonaws.com/backend/predict', {
+                        method: 'post',
+                        body: JSON.stringify(stored_reviews)
+                    }).then(function (response) {
+                        return response.json();
+                    }).then(function (data) {
+                        reviewId = data.id
+                        intervalId = window.setInterval(function () { getSummaryData(reviewId) }, 5000);
+                    });
+                }
             });
-        });
-
-        // chrome.storage.local.get(['product_details', 'product_review_details'], function (result) {
-        //     var url = 'data:application/json;base64,' + btoa(result.product_details);
-        //     chrome.downloads.download({
-        //         url: url,
-        //         filename: 'product_details.json'
-        //     });
-        //     var product_review_json = JSON.stringify(result.product_review_details)
-        //     var url = 'data:application/json;base64,' + btoa(unescape(encodeURIComponent(product_review_json)));
-        //     chrome.downloads.download({
-        //         url: url,
-        //         filename: 'product_reviews_details.json'
-        //     });
-        // });
-        
-        chrome.storage.local.remove(["product_details", "product_review_details"], function () {
-            var error = chrome.runtime.lastError;
-            if (error) {
-                console.error(error);
-            }
-        });
-        // console.log('Lets update to the original baseURL')
-        chrome.tabs.update({ url: info.baseURL }) 
-    }
-    else if (typeof info.nextReviewsURL){ 
-    //    console.log('This is not the last reviews page')
-        new_reviews = info
-        chrome.storage.local.get(['product_review_details'], function (result) {
-            stored_reviews = result["product_review_details"]
-            var i = 0
-            stored_reviews_length = Object.keys(stored_reviews).length
-            new_reviews_length = Object.keys(new_reviews).length
-            while (i < new_reviews_length) {
-                stored_reviews[stored_reviews_length++] = new_reviews[i++]
-            }
-            chrome.storage.local.set({ 'product_review_details': stored_reviews }, function () {})
-        })
-        // console.log('Navigating to the next reviews page')
-        chrome.tabs.update({ url: info.nextReviewsURL })
+            chrome.storage.local.remove(["product_details", "product_review_details"], function () {
+                var error = chrome.runtime.lastError;
+                if (error) {
+                    console.error(error);
+                }
+            });
+            chrome.tabs.update({ url: info.baseURL })
+        }
+        else if (typeof info.nextReviewsURL) {
+            new_reviews = info
+            chrome.storage.local.get(['product_review_details'], function (result) {
+                stored_reviews = result["product_review_details"]
+                var i = 0
+                stored_reviews_length = Object.keys(stored_reviews).length
+                new_reviews_length = Object.keys(new_reviews).length
+                while (i < new_reviews_length) {
+                    stored_reviews[stored_reviews_length++] = new_reviews[i++]
+                }
+                chrome.storage.local.set({ 'product_review_details': stored_reviews }, function () { })
+            })
+            chrome.tabs.update({ url: info.nextReviewsURL })
+        }
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    // console.log("Dom loaded and sending message to content.js")
     document.getElementById("start-your-magic").addEventListener('click', function () {
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-            var product_url=tabs[0].url
-            // console.log('Product url:',product_url)
-            chrome.storage.local.set({'product_url':product_url })
+            var product_url = tabs[0].url
+            chrome.storage.local.set({ 'product_url': product_url })
             chrome.tabs.sendMessage(tabs[0].id, { text: 'get-initial-data' }, getInitialData);
 
         })
@@ -105,21 +97,14 @@ document.addEventListener("DOMContentLoaded", () => {
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (tab.status == 'complete') {
         chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-            // console.log('onUpdated event triggered')
-            currentURL=tabs[0].url
-            // console.log('currentURL',currentURL) 
-            chrome.storage.local.get(['product_url'], function(result){
-                baseURL= result['product_url']
-                chrome.tabs.sendMessage(tabs[0].id, { text: 'get-review-data' }, getReviewData);
-            if(baseURL!=currentURL){
-                // console.log('we have not reached baseURL yet, so onUpdated event triggered')
-                chrome.tabs.sendMessage(tabs[0].id, { text: 'get-review-data' }, getReviewData);
-            }
-            else{
-                // console.log('not triggered')
-            }
+            currentURL = tabs[0].url
+            chrome.storage.local.get(['product_url'], function (result) {
+                baseURL = result['product_url']
+                // chrome.tabs.sendMessage(tabs[0].id, { text: 'get-review-data' }, getReviewData);
+                if (baseURL != currentURL) {
+                    chrome.tabs.sendMessage(tabs[0].id, { text: 'get-review-data' }, getReviewData);
+                }
             })
-            
         });
     }
 });

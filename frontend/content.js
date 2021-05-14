@@ -3,7 +3,6 @@ chrome.storage.local.get(['product_url'], function(result){
     baseURL= result['product_url']
     // console.log('baseURL from chrome.storage', baseURL) 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    // console.log('current message', msg.text)
     if (msg.text == 'get-initial-data') {
         console.log('get-initial-data triggered')
         // console.log('price',document.getElementById('priceblock_ourprice').innerText)
@@ -14,6 +13,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             overallProductRating: document.querySelectorAll("[data-hook='average-star-rating']")[0].innerText
         }
     } else if (msg.text == 'get-review-data') {
+        console.log('current message', msg.text)
         console.log('get-review-data triggered')
         reviews = {}
         var i = 0;
@@ -31,8 +31,13 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             }
             reviews[i] = new_review_block
         }
-        var next_url = document.getElementsByClassName("a-last")[0].getElementsByTagName('a')[0]
-
+        try {
+            var next_url = document.getElementsByClassName("a-last")[0].getElementsByTagName('a')[0]
+        }
+        catch(err) {
+            console.log("Undefined")
+        }
+        console.log('next_url',next_url)
         if (typeof next_url !== 'undefined') {
             next_url_dict = {
                 'nextReviewsURL': document.getElementsByClassName("a-last")[0].getElementsByTagName('a')[0].href
@@ -47,6 +52,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
     console.log('sendResponse() triggered', domInfo)
     sendResponse(domInfo)
-    return True
+    return true
 })
 });

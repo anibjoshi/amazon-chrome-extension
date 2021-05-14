@@ -18,7 +18,8 @@
     },
     "permissions": [
         "tabs",
-        "https://chrome-extension-backend.herokuapp.com/predict",
+        "https://ccht5748dc.execute-api.us-east-1.amazonaws.com/backend/predict",
+        "https://ccht5748dc.execute-api.us-east-1.amazonaws.com/backend/results",
         "http://127.0.0.1:5000/predict",
         "storage",
         "activeTab",
