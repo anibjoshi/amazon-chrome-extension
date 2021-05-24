@@ -1,6 +1,6 @@
 {
     "manifest_version":2,
-    "name": "Amazon Review Genie",
+    "name": "TL;DR for Amazon",
     "description": "Analyzes Amazon reviews using NLP techniques to reveal important insights about the product",
     "version": "1.0.0",
     "content_scripts": [
@@ -10,7 +10,7 @@
         }
     ],
   "browser_action": {
-    "default_title": "Amazon Review Genie",
+    "default_title": "TL;DR for Amazon",
     "default_popup": "popup.html"
   },
     "icons": {
@@ -20,9 +20,6 @@
         "tabs",
         "https://ccht5748dc.execute-api.us-east-1.amazonaws.com/backend/predict",
         "https://ccht5748dc.execute-api.us-east-1.amazonaws.com/backend/results",
-        "http://127.0.0.1:5000/predict",
-        "storage",
-        "activeTab",
-        "downloads"
+        "storage"
 ]
 }
